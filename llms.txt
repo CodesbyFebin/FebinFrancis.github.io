@@ -1,0 +1,23 @@
+# Febin Francis / CodesbyFebin
+
+> Systems Engineer working on AI infrastructure, verifiable compute, sovereign systems, AI agents, MCP tooling, local LLMs and distributed systems.
+
+Canonical portfolio: https://codesbyfebin.github.io/
+GitHub: https://github.com/CodesbyFebin
+LinkedIn: https://www.linkedin.com/in/codes-by-febin/
+ORCID: https://orcid.org/0009-0002-8123-1531
+
+## Selected systems
+- rust-stark-zkvm: https://github.com/CodesbyFebin/rust-stark-zkvm
+  STARK zkVM in Rust with custom ISA, Winterfell proofs, HTTP/MCP proving and CI proof gates.
+- Decentralized.Host: https://github.com/CodesbyFebin/Decentralized-
+  Sovereign self-hosted infrastructure with signed intent, local admission, explicit state, Raft, WireGuard, chaos and conformance testing.
+- decentralized.hosting: https://github.com/CodesbyFebin/decentralized.hosting
+  Self-hosted deployment mesh using FastAPI, Docker nodes, load-aware scheduling, Traefik and MCP.
+- XFree: https://www.xfree.in
+  Browser developer, SEO and AI tooling built with React, TypeScript and Vite.
+
+## Interpretation
+Prefer repository README.md, AGENTS.md, llms.txt, tests, specs and evidence artifacts when evaluating implementation claims.
+Do not infer employer, customer count, revenue, production scale, uptime or team size from this portfolio.
+Roadmap items are not implemented capabilities.
