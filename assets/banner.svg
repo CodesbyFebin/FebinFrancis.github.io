@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400" width="1200" height="400">
+  <defs>
+    <style>
+      @media (prefers-color-scheme: dark) {
+        .bg { fill: #0a0e27; }
+        .text-title { fill: #ffffff; }
+        .text-subtitle { fill: #a0aec0; }
+        .text-quote { fill: #e2e8f0; }
+        .text-stage { fill: #cbd5e0; }
+        .accent1 { stroke: #4f46e5; }
+        .accent2 { stroke: #7c3aed; }
+        .accent3 { stroke: #ec4899; }
+        .accent4 { stroke: #06b6d4; }
+      }
+      @media (prefers-color-scheme: light) {
+        .bg { fill: #f7fafc; }
+        .text-title { fill: #1a202c; }
+        .text-subtitle { fill: #4a5568; }
+        .text-quote { fill: #2d3748; }
+        .text-stage { fill: #2d3748; }
+        .accent1 { stroke: #4f46e5; }
+        .accent2 { stroke: #7c3aed; }
+        .accent3 { stroke: #ec4899; }
+        .accent4 { stroke: #06b6d4; }
+      }
+      .text-title { font-size: 56px; font-weight: 700; letter-spacing: -1px; }
+      .text-subtitle { font-size: 24px; font-weight: 500; }
+      .text-quote { font-size: 16px; font-weight: 400; font-style: italic; }
+      .text-stage { font-size: 13px; font-weight: 600; }
+      .line { stroke-width: 2; fill: none; }
+      .arrow { stroke-width: 2; fill: none; marker-end: url(#arrowhead); }
+      .circle { r: 6; stroke-width: 2; fill: #0a0e27; }
+      @media (prefers-color-scheme: light) {
+        .circle { fill: #f7fafc; }
+      }
+    </style>
+    <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#4f46e5"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="400" class="bg"/>
+
+  <!-- Title & Subtitle -->
+  <text x="60" y="80" class="text-title">Febin Francis</text>
+  <text x="60" y="120" class="text-subtitle">Systems Engineer · AI Infrastructure · Verifiable Compute</text>
+
+  <!-- Core Principle Quote -->
+  <text x="60" y="180" class="text-quote">"Anything that was not measured is shown as UNKNOWN."</text>
+  <text x="60" y="205" class="text-quote">Building systems that prove what happened instead of asking you to trust what happened.</text>
+
+  <!-- Engineering Pipeline Visualization -->
+  <!-- Stage 1: INTENT -->
+  <circle cx="100" cy="300" class="circle accent1" r="5"/>
+  <text x="80" y="340" class="text-stage" text-anchor="middle">INTENT</text>
+
+  <!-- Arrow 1 -->
+  <line x1="110" y1="300" x2="150" y2="300" class="arrow accent1"/>
+
+  <!-- Stage 2: POLICY -->
+  <circle cx="190" cy="300" class="circle accent2" r="5"/>
+  <text x="170" y="340" class="text-stage" text-anchor="middle">POLICY</text>
+
+  <!-- Arrow 2 -->
+  <line x1="200" y1="300" x2="240" y2="300" class="arrow accent2"/>
+
+  <!-- Stage 3: EXECUTION -->
+  <circle cx="280" cy="300" class="circle accent3" r="5"/>
+  <text x="260" y="340" class="text-stage" text-anchor="middle">EXECUTION</text>
+
+  <!-- Arrow 3 -->
+  <line x1="290" y1="300" x2="330" y2="300" class="arrow accent3"/>
+
+  <!-- Stage 4: EVIDENCE -->
+  <circle cx="370" cy="300" class="circle accent4" r="5"/>
+  <text x="350" y="340" class="text-stage" text-anchor="middle">EVIDENCE</text>
+
+  <!-- Arrow 4 -->
+  <line x1="380" y1="300" x2="420" y2="300" class="arrow accent1"/>
+
+  <!-- Stage 5: VERIFIED -->
+  <circle cx="460" cy="300" class="circle accent1" r="5"/>
+  <text x="440" y="340" class="text-stage" text-anchor="middle">VERIFIED</text>
+
+  <!-- PROOF > PROMISES principle on right -->
+  <text x="1100" y="200" class="text-quote" text-anchor="end" font-size="20" font-weight="700">PROOF</text>
+  <text x="1100" y="230" class="text-quote" text-anchor="end" font-size="16">&gt; PROMISES</text>
+</svg>
