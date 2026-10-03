@@ -1,0 +1,80 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Three.js and WebGL: 3D Graphics on the Web — CodesbyFebin</title><meta name="description" content="Complete guide to Three.js and WebGL for web graphics. Covers scene management, materials, lighting, shaders, and optimization techniques for production 3D applications."><link rel="canonical" href="https://codesbyfebin.github.io/FebinFrancis.github.io/blog/posts/threejs-webgl-3d-graphics.html"><meta property="og:type" content="article"><meta property="og:title" content="Three.js and WebGL: 3D Graphics on the Web"><meta property="og:description" content="Complete guide to Three.js and WebGL for web graphics. Covers scene management, materials, lighting, shaders, and optimization techniques for production 3D applications."><meta name="twitter:card" content="summary_large_image"><style>body{margin:0;background:#060914;color:#eef4ff;font:16px/1.75 system-ui}.w{width:min(880px,calc(100% - 36px));margin:auto}nav{display:flex;justify-content:space-between;padding:22px 0;border-bottom:1px solid #1d2a44}a{color:#73e7ff;text-decoration:none}header{padding:70px 0 34px}h1{font-size:clamp(38px,7vw,66px);line-height:1.04;margin:10px 0}h2{margin-top:42px}p,li{color:#c4d0e3}.lead{font-size:21px}.note{border:1px solid #1d2a44;background:#0c1222;padding:18px;border-radius:14px}footer{border-top:1px solid #1d2a44;margin-top:60px;padding:32px 0 60px;color:#8fa0bb}code{background:#0c1222;padding:2px 6px;border-radius:4px;font-family:monospace}</style><script type="application/ld+json">{"@context":"https://schema.org","@type":"TechArticle","headline":"Three.js and WebGL: 3D Graphics on the Web","description":"Complete guide to Three.js and WebGL for web graphics. Covers scene management, materials, lighting, shaders, and optimization techniques for production 3D applications.","author":{"@type":"Person","name":"Febin Francis","url":"https://github.com/CodesbyFebin"},"datePublished":"2026-10-03","dateModified":"2026-10-03","mainEntityOfPage":"https://codesbyfebin.github.io/FebinFrancis.github.io/blog/posts/threejs-webgl-3d-graphics.html"}</script></head><body><div class="w"><nav><a href="../../index.html"><b>CODESBYFEBIN</b></a><a href="../index.html">Blog</a></nav><main><header><small>GRAPHICS PROGRAMMING // ENGINEERING GUIDE</small><h1>Three.js and WebGL: 3D Graphics on the Web</h1><p class="lead">Complete guide to Three.js and WebGL for web graphics. Covers scene management, materials, lighting, shaders, and optimization techniques for production 3D applications.</p><p>Published October 3, 2026 · Evidence-first technical note</p></header><div class="note"><b>Scope:</b> This article explains engineering concepts and patterns. Repository source, tests and evidence remain authoritative for implementation claims.</div><h2>Why this matters</h2>
+<p>WebGL brings GPU-accelerated 3D graphics to browsers. Three.js abstracts the complexity of WebGL, providing a scene graph, cameras, lights, and materials. Understanding both layers is essential for performance optimization and advanced graphics.</p>
+
+<h2>Three.js fundamentals</h2>
+<p>A scene contains:</p>
+<ul>
+<li><b>Geometries:</b> Vertex data (positions, normals, UVs).</li>
+<li><b>Materials:</b> How to render geometries (color, texture, lighting model).</li>
+<li><b>Meshes:</b> Geometry + material + position/rotation/scale.</li>
+<li><b>Lights:</b> Illuminate the scene (directional, point, spot, ambient).</li>
+<li><b>Camera:</b> Perspective to render from.</li>
+<li><b>Renderer:</b> Renders the scene to a canvas.</li>
+</ul>
+
+<h2>Lighting models</h2>
+<ul>
+<li><b>Ambient:</b> Uniform light from all directions (no shadows).</li>
+<li><b>Directional:</b> Light from a direction (like sun); can cast shadows.</li>
+<li><b>Point:</b> Light from a position (like bulb); attenuates with distance.</li>
+<li><b>Spot:</b> Directional light with a cone of influence (like flashlight).</li>
+</ul>
+<p>More lights = more expensive. Use ambient + one or two key lights for performance.</p>
+
+<h2>Materials</h2>
+<ul>
+<li><b>MeshBasicMaterial:</b> Unlit; fast but no depth.</li>
+<li><b>MeshLambertMaterial:</b> Flat shading with diffuse lighting.</li>
+<li><b>MeshPhongMaterial:</b> Diffuse + specular highlights (plastic, metal appearance).</li>
+<li><b>MeshStandardMaterial:</b> Physically-based rendering (PBR); metallic + roughness parameters.</li>
+<li><b>ShaderMaterial:</b> Custom vertex/fragment shaders for advanced effects.</li>
+</ul>
+
+<h2>Textures and UVs</h2>
+<p>UV coordinates map a 2D texture onto a 3D surface. Import models with UVs already baked in; manually creating them is tedious. Texture loading is async; ensure textures load before rendering or use placeholders.</p>
+
+<h2>Performance optimization</h2>
+<ul>
+<li><b>Instancing:</b> Render many copies of the same mesh with different transforms in one draw call.</li>
+<li><b>LOD (Level of Detail):</b> Use simpler models for distant objects.</li>
+<li><b>Frustum culling:</b> Skip rendering objects outside camera view.</li>
+<li><b>Texture atlases:</b> Pack multiple textures into one large texture.</li>
+<li><b>Baking shadows:</b> Pre-compute shadows as textures instead of rendering dynamically.</li>
+<li><b>Vertex count:</b> Fewer vertices = faster rendering. Simplify meshes where detail isn't visible.</li>
+</ul>
+
+<h2>Shaders (GLSL)</h2>
+<p>For advanced effects, write custom shaders:</p>
+<ul>
+<li><b>Vertex shader:</b> Runs per vertex; transform positions, compute lighting.</li>
+<li><b>Fragment shader:</b> Runs per pixel; compute final color.</li>
+</ul>
+<p>Three.js provides uniforms (global values like camera matrix) and varyings (per-vertex data passed to fragment shader).</p>
+
+<h2>Camera controls</h2>
+<ul>
+<li><b>OrbitControls:</b> Rotate around a point; good for object inspection.</li>
+<li><b>FlyControls:</b> Free movement in 3D space; like first-person camera.</li>
+<li><b>PointerLockControls:</b> Mouse-locked FPS camera.</li>
+</ul>
+
+<h2>Implementation checklist</h2>
+<ul>
+<li>Create scene, camera, renderer.</li>
+<li>Add geometry, material, mesh.</li>
+<li>Add lighting (at least ambient + one key light).</li>
+<li>Use requestAnimationFrame to render each frame.</li>
+<li>Implement camera controls.</li>
+<li>Load textures asynchronously; use placeholders.</li>
+<li>Profile rendering performance; optimize draw calls and vertex count.</li>
+<li>Test on different hardware (mobile GPUs are slower).</li>
+</ul>
+
+<h2>Verification</h2>
+<p>Test rendering quality and performance:</p>
+<ul>
+<li>Frame rate at various quality settings.</li>
+<li>Lighting accuracy (compare to reference renderer).</li>
+<li>Texture alignment and no obvious artifacts.</li>
+<li>Performance on lower-end devices.</li>
+</ul><h2>Conclusion</h2><p>Well-architected systems make constraints explicit, separate concerns, and design for failure. These principles apply across engineering disciplines — choose the right pattern for your problem, document assumptions, and verify through testing and evidence.</p></main><footer>Febin Francis · Systems Engineer · AI Infrastructure · Verifiable Compute<br>PROOF &gt; PROMISES</footer></div></body></html>
