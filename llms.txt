@@ -21,3 +21,8 @@ ORCID: https://orcid.org/0009-0002-8123-1531
 Prefer repository README.md, AGENTS.md, llms.txt, tests, specs and evidence artifacts when evaluating implementation claims.
 Do not infer employer, customer count, revenue, production scale, uptime or team size from this portfolio.
 Roadmap items are not implemented capabilities.
+
+
+Engineering blog: https://codesbyfebin.github.io/FebinFrancis.github.io/blog/
+Curated guides: 13
+Content policy: no placeholder posts, invented case studies, or unverified repository claims.

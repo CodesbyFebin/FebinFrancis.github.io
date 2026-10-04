@@ -1,0 +1,68 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Game Architecture for Web: From Canvas to WebGL — CodesbyFebin</title><meta name="description" content="Architectural patterns for web-based games and interactive experiences. Covers frame timing, input handling, state management, and performance optimization for interactive applications."><link rel="canonical" href="https://codesbyfebin.github.io/FebinFrancis.github.io/blog/posts/game-architecture-canvas-webgl.html"><meta property="og:type" content="article"><meta property="og:title" content="Game Architecture for Web: From Canvas to WebGL"><meta property="og:description" content="Architectural patterns for web-based games and interactive experiences. Covers frame timing, input handling, state management, and performance optimization for interactive applications."><meta name="twitter:card" content="summary_large_image"><style>body{margin:0;background:#060914;color:#eef4ff;font:16px/1.75 system-ui}.w{width:min(880px,calc(100% - 36px));margin:auto}nav{display:flex;justify-content:space-between;padding:22px 0;border-bottom:1px solid #1d2a44}a{color:#73e7ff;text-decoration:none}header{padding:70px 0 34px}h1{font-size:clamp(38px,7vw,66px);line-height:1.04;margin:10px 0}h2{margin-top:42px}p,li{color:#c4d0e3}.lead{font-size:21px}.note{border:1px solid #1d2a44;background:#0c1222;padding:18px;border-radius:14px}footer{border-top:1px solid #1d2a44;margin-top:60px;padding:32px 0 60px;color:#8fa0bb}code{background:#0c1222;padding:2px 6px;border-radius:4px;font-family:monospace}</style><script type="application/ld+json">{"@context":"https://schema.org","@type":"TechArticle","headline":"Game Architecture for Web: From Canvas to WebGL","description":"Architectural patterns for web-based games and interactive experiences. Covers frame timing, input handling, state management, and performance optimization for interactive applications.","author":{"@type":"Person","name":"Febin Francis","url":"https://github.com/CodesbyFebin"},"datePublished":"2026-10-03","dateModified":"2026-10-03","mainEntityOfPage":"https://codesbyfebin.github.io/FebinFrancis.github.io/blog/posts/game-architecture-canvas-webgl.html"}</script></head><body><div class="w"><nav><a href="../../index.html"><b>CODESBYFEBIN</b></a><a href="../index.html">Blog</a></nav><main><header><small>SOFTWARE ARCHITECTURE // ENGINEERING GUIDE</small><h1>Game Architecture for Web: From Canvas to WebGL</h1><p class="lead">Architectural patterns for web-based games and interactive experiences. Covers frame timing, input handling, state management, and performance optimization for interactive applications.</p><p>Published October 3, 2026 · Evidence-first technical note</p></header><div class="note"><b>Scope:</b> This article explains engineering concepts and patterns. Repository source, tests and evidence remain authoritative for implementation claims.</div><h2>Why this matters</h2>
+<p>Game loops are fundamentally different from request-response web applications. A game must render frames at 60 FPS, handle input in real-time, maintain consistent state and coordinate multiple systems (physics, AI, rendering) in sync. The architecture must support this without blocking or stuttering.</p>
+
+<h2>The game loop</h2>
+<p>Every frame:</p>
+<ul>
+<li><b>Input:</b> Poll keyboard, mouse, gamepad state.</li>
+<li><b>Update:</b> Apply physics, AI, game logic; modify entity positions and state.</li>
+<li><b>Render:</b> Draw current frame to canvas or WebGL context.</li>
+</ul>
+<p>Use <code>requestAnimationFrame</code> to sync with display refresh (60 FPS @ 16.7ms per frame). Do not use <code>setInterval</code>; it's not synchronized.</p>
+
+<h2>State management</h2>
+<p>Separate concerns:</p>
+<ul>
+<li><b>Game state:</b> Positions, health, score, level data.</li>
+<li><b>View state:</b> Camera position, zoom, viewport.</li>
+<li><b>Input state:</b> Which keys are currently pressed (not just events).</li>
+<li><b>Render state:</b> Sprite atlases, shaders, textures already loaded.</li>
+</ul>
+<p>Keep these orthogonal to enable testing, replaying and debugging.</p>
+
+<h2>Canvas vs. WebGL</h2>
+<p><b>Canvas 2D:</b> Simple, immediate-mode drawing. Suitable for small scenes, UI, simple graphics. Slower for complex scenes.</p>
+<p><b>WebGL:</b> GPU-accelerated retained-mode rendering. Higher performance for complex 3D and large 2D scenes. Requires shaders and more setup.</p>
+
+<h2>Performance optimization</h2>
+<ul>
+<li><b>Limit draw calls:</b> Batch similar objects to reduce GPU state changes.</li>
+<li><b>Frustum culling:</b> Don't render objects outside the visible camera area.</li>
+<li><b>Object pooling:</b> Reuse entity objects instead of creating/destroying them (garbage collection causes frame drops).</li>
+<li><b>Sprite atlases:</b> Use one large texture with many sprites instead of separate textures (faster than multiple draw calls).</li>
+<li><b>Level of detail (LOD):</b> Use simpler models or textures for distant objects.</li>
+</ul>
+
+<h2>Input handling</h2>
+<p>For smooth, responsive controls:</p>
+<ul>
+<li><b>Track key state:</b> Maintain a map of currently-pressed keys; update on keydown/keyup events.</li>
+<li><b>Check state in update loop:</b> Don't rely on individual events; they can be missed if update lags.</li>
+<li><b>Gamepad API:</b> Poll gamepad state manually; gamepad input doesn't fire events.</li>
+<li><b>Pointer events:</b> Use for mouse/touch input; handle both independently.</li>
+</ul>
+
+<h2>Frame timing and delta time</h2>
+<p>Frame rate varies. Update using delta time (elapsed since last frame) to ensure consistent motion:</p>
+<p><code>position += velocity * deltaTime</code> (not <code>position += velocity</code>)</p>
+<p>Cap delta time to prevent huge jumps if a frame takes longer than expected.</p>
+
+<h2>Implementation checklist</h2>
+<ul>
+<li>Use <code>requestAnimationFrame</code> for the game loop.</li>
+<li>Track key state; don't rely on events alone.</li>
+<li>Use delta time for physics and movement.</li>
+<li>Batch rendering to reduce draw calls.</li>
+<li>Implement frustum culling to skip off-screen objects.</li>
+<li>Use sprite atlases instead of separate textures.</li>
+<li>Profile rendering time and optimize bottlenecks.</li>
+</ul>
+
+<h2>Verification</h2>
+<p>Test performance and responsiveness:</p>
+<ul>
+<li>Frame rate under stress (many objects, complex physics).</li>
+<li>Input latency (delay from key press to character movement on screen).</li>
+<li>Memory usage (should be stable, not growing each frame).</li>
+<li>Behavior at 30 FPS, 60 FPS, and variable frame rates.</li>
+</ul><h2>Conclusion</h2><p>Well-architected systems make constraints explicit, separate concerns, and design for failure. These principles apply across engineering disciplines — choose the right pattern for your problem, document assumptions, and verify through testing and evidence.</p></main><footer>Febin Francis · Systems Engineer · AI Infrastructure · Verifiable Compute<br>PROOF &gt; PROMISES</footer></div></body></html>
